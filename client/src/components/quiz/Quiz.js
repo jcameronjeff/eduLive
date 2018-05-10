@@ -9,71 +9,91 @@ import {
   Button
 } from "react-bootstrap";
 import { className } from "classnames";
-import BarChart from "react-chartjs-2";
+import Chart from "./Chart";
 
 class Quiz extends React.Component {
-  chartData = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    datasets: [
-      {
-        label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)"
-        ],
-        borderColor: [
-          "rgba(255,99,132,1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)"
-        ],
-        borderWidth: 1
-      }
-    ]
+  constructor(props) {
+    super(props);
+    this.state = { selectedAnswer: "" };
+
+    this.handleAnswerChange = this.handleAnswerChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.socket = this.props.socket;
+  }
+
+  handleAnswerChange(e) {
+    this.setState({
+      selectedAnswer: e.target.value
+    });
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const answerData = {
+      answer: this.state.selectedAnswer
+    };
+
+    this.socket.emit("vote", {
+      vote: this.state.selectedAnswer
+    });
+    console.log(answerData);
   };
 
   render() {
     const quizStyle = {
-      height: "85vh"
+      height: "45vh",
+      margin: "0 auto",
+      width: "90%",
+      backgroundColor: "white",
+      marginTop: "50px",
+      padding: "10px"
     };
     return (
-      <div className="quiz" style={quizStyle}>
-        <Grid>
-          <Row>
-            <BarChart data={this.chartData} />
-          </Row>
-          <Row>
-            <Col md={8}>
-              <h3>What is the answer to my really awesome question?</h3>
-              <br />
-              <FormGroup>
-                <p>
-                  <Radio name="radioGroup" inline>
-                    1
-                  </Radio>
-                </p>
-                <p>
-                  <Radio name="radioGroup" inline>
-                    2
-                  </Radio>
-                </p>
-                <p>
-                  <Radio name="radioGroup" inline>
-                    3
-                  </Radio>
-                </p>
-                <Button bsStyle="primary">Submit</Button>
-              </FormGroup>
-            </Col>
-          </Row>
-        </Grid>
+      <div style={quizStyle}>
+        <h3>What is the answer to my really awesome question?</h3>
+        <br />
+        <Form onSubmit={this.handleSubmit}>
+          <FormGroup>
+            <Radio
+              name="radioGroup"
+              value="A"
+              checked={this.state.selectedAnswer === "A"}
+              onChange={this.handleAnswerChange}
+            >
+              A
+            </Radio>
+
+            <Radio
+              name="radioGroup"
+              value="B"
+              checked={this.state.selectedAnswer === "B"}
+              onChange={this.handleAnswerChange}
+            >
+              B
+            </Radio>
+
+            <Radio
+              name="radioGroup"
+              value="C"
+              checked={this.state.selectedAnswer === "C"}
+              onChange={this.handleAnswerChange}
+            >
+              C
+            </Radio>
+            <Radio
+              name="radioGroup"
+              value="D"
+              checked={this.state.selectedAnswer === "D"}
+              onChange={this.handleAnswerChange}
+            >
+              D
+            </Radio>
+            <Button type="submit" bsStyle="primary">
+              Submit
+            </Button>
+          </FormGroup>
+        </Form>
       </div>
     );
   }

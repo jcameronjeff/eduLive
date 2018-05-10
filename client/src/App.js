@@ -16,7 +16,13 @@ import { Provider } from "react-redux";
 import ClassRoom from "./components/ClassRoom";
 import store from "./store";
 import PrivateRoute from "./components/common/PrivateRoute";
+import PropsRoute from "./components/common/PropsRoute";
 import Quiz from "./components/quiz/Quiz";
+import Chart from "./components/quiz/Chart";
+import CanvasChart from "./components/quiz/CanvasChart";
+import io from "socket.io-client";
+
+const socket = io(window.location.origin);
 
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -47,9 +53,26 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/quiz" component={Quiz} />
+              <PropsRoute
+                exact
+                path="/canvaschart"
+                component={CanvasChart}
+                socket={socket}
+              />
+              <PropsRoute exact path="/quiz" component={Quiz} socket={socket} />
+              <PropsRoute
+                exact
+                path="/chart"
+                component={Chart}
+                socket={socket}
+              />
               <Switch>
-                <PrivateRoute exact path="/classroom" component={ClassRoom} />
+                <PrivateRoute
+                  exact
+                  path="/classroom"
+                  component={ClassRoom}
+                  socket={socket}
+                />
               </Switch>
             </div>
             <Footer />

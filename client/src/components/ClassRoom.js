@@ -5,24 +5,32 @@ import { connect } from "react-redux";
 import Paint from "./paint/Paint";
 import { Grid, Col, Row } from "react-bootstrap";
 import { className } from "classnames";
-import io from "socket.io-client";
+import Quiz from "./quiz/Quiz";
+import CanvasChart from "./quiz/CanvasChart";
 
-const socket = io(window.location.origin);
 class ClassRoom extends Component {
-  //socket = io("http://localhost:3001")
-
   render() {
     const { user } = this.props.auth;
+
+    console.log("CLASS", this.props);
     return (
       <div className="class-room">
         <Grid>
           <p className="lead text-muted">Welcome {user.name}</p>
           <Row>
             <Col md={6}>
-              <Chat socket={socket} name={user.name} />
+              <Chat socket={this.props.socket} name={user.name} />
             </Col>
             <Col md={6}>
-              <Paint socket={socket} />
+              <Paint socket={this.props.socket} />
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <Quiz socket={this.props.socket} />
+            </Col>
+            <Col md={6}>
+              <CanvasChart socket={this.props.socket} />
             </Col>
           </Row>
         </Grid>
