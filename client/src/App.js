@@ -1,20 +1,22 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import jwt_decode from 'jwt-decode';
-import setAuthToken from './utils/setAuthToken';
-import {setCurrentUser, logoutUser} from './actions/authActions';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
 
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import {Provider} from "react-redux";
+
+import { Provider } from "react-redux";
 import ClassRoom from "./components/ClassRoom";
 import store from "./store";
-import PrivateRoute from './components/common/PrivateRoute';
+import PrivateRoute from "./components/common/PrivateRoute";
+import Quiz from "./components/quiz/Quiz";
 
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -30,7 +32,7 @@ if (localStorage.jwtToken) {
     // Logout user
     store.dispatch(logoutUser());
     // TODO: Clear current Profile Redirect to login
-    window.location.href = '/login';
+    window.location.href = "/login";
   }
 }
 
@@ -40,16 +42,17 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Navbar/>
-            <Route exact path="/" component={Landing}/>
+            <Navbar />
+            <Route exact path="/" component={Landing} />
             <div className="container">
-              <Route exact path="/register" component={Register}/>
-              <Route exact path="/login" component={Login}/>
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/quiz" component={Quiz} />
               <Switch>
-                <PrivateRoute exact path="/classroom" component={ClassRoom}/>
+                <PrivateRoute exact path="/classroom" component={ClassRoom} />
               </Switch>
             </div>
-            <Footer/>
+            <Footer />
           </div>
         </Router>
       </Provider>
