@@ -66,6 +66,11 @@ io.sockets.on("connection", socket => {
     io.emit("chat", data);
     console.log(data);
   });
+  socket.on("prichat", function(data) {
+    // console.log('message: ' + data)
+    io.emit("prichat", data);
+    console.log(data);
+  });
   socket.on("drawing", data => socket.broadcast.emit("drawing", data));
   socket.on("vote", data => io.emit("vote", data));
   socket.on("disconnect", () => console.log("Client disconnected"));

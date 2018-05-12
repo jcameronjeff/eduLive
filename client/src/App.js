@@ -74,7 +74,7 @@ class App extends Component {
                   component={Chart}
                   socket={socket}
                 />
-                <PropsRoute
+                <PrivateRoute
                   exact
                   path="/prichat"
                   component={PriChat}

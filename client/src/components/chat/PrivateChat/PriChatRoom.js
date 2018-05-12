@@ -69,8 +69,8 @@ class PriChatRoom extends React.Component {
             <PriChatTable messages={this.state.messages} />
           </div>
 
-          <div className="Row">
-            <Form inline onSubmit={this.handleSubmit}>
+          <div className="Row text-center">
+            <Form class="ml-5" inline onSubmit={this.handleSubmit}>
               <FormGroup>
                 <FormControl
                   id="message"

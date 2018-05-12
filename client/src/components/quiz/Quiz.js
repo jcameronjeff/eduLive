@@ -15,7 +15,6 @@ class Quiz extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selectedAnswer: "" };
-
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.socket = this.props.socket;
@@ -47,7 +46,7 @@ class Quiz extends React.Component {
     };
     return (
       <div style={quizStyle}>
-        <h3>What is the answer to my really awesome question?</h3>
+        <h3>What are WebSockets?</h3>
         <br />
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
@@ -57,7 +56,7 @@ class Quiz extends React.Component {
               checked={this.state.selectedAnswer === "A"}
               onChange={this.handleAnswerChange}
             >
-              A
+              WebSockets enable two-way communication between client ans server.
             </Radio>
 
             <Radio
@@ -66,7 +65,7 @@ class Quiz extends React.Component {
               checked={this.state.selectedAnswer === "B"}
               onChange={this.handleAnswerChange}
             >
-              B
+              WebSockets enable HTTP transmition of data from server to client.
             </Radio>
 
             <Radio
@@ -75,7 +74,7 @@ class Quiz extends React.Component {
               checked={this.state.selectedAnswer === "C"}
               onChange={this.handleAnswerChange}
             >
-              C
+              WebSockets connect independent pieces of middleware.
             </Radio>
             <Radio
               name="radioGroup"
@@ -83,7 +82,7 @@ class Quiz extends React.Component {
               checked={this.state.selectedAnswer === "D"}
               onChange={this.handleAnswerChange}
             >
-              D
+              WebSockets are weaved by electric spiders.
             </Radio>
             <Button type="submit" bsStyle="primary">
               Submit

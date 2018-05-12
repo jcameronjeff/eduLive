@@ -10,11 +10,11 @@ class PriChat extends React.Component {
     const { user } = this.props.auth;
 
     return (
-      <Grid>
+      <div className="col-md-12">
         {user.name && (
           <PriChatRoom socket={this.props.socket} name={user.name} />
         )}
-      </Grid>
+      </div>
     );
   }
 
