@@ -11,29 +11,26 @@ import CanvasChart from "./quiz/CanvasChart";
 class ClassRoom extends Component {
   render() {
     const { user } = this.props.auth;
-
     console.log("CLASS", this.props);
     return (
-      <div className="class-room">
-        <Grid>
-          <p className="lead text-muted">Welcome {user.name}</p>
-          <Row>
-            <Col md={6}>
+      <div className="class-room light-overlay mb-5">
+        <div className="container-fluid">
+          <div className="row my-5 mt-5">
+            <Col md={4} lg={3} sm={12}>
               <Chat socket={this.props.socket} name={user.name} />
             </Col>
-            <Col md={6}>
-              <Paint socket={this.props.socket} />
+            <Col md={6} lg={6} sm={12}>
+              <div className="card quiz p-5">
+                <p className="lead text-muted">Welcome {user.name}</p>
+                <Quiz socket={this.props.socket} />
+              </div>
             </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              <Quiz socket={this.props.socket} />
-            </Col>
-            <Col md={6}>
+
+            <Col md={4} lg={3} sm={12}>
               <CanvasChart socket={this.props.socket} />
             </Col>
-          </Row>
-        </Grid>
+          </div>
+        </div>
       </div>
     );
   }

@@ -42,11 +42,7 @@ class Quiz extends React.Component {
 
   render() {
     const quizStyle = {
-      height: "45vh",
       margin: "0 auto",
-      width: "90%",
-      backgroundColor: "white",
-      marginTop: "50px",
       padding: "10px"
     };
     return (

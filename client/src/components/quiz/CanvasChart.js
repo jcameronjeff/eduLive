@@ -33,7 +33,7 @@ class CanvasChart extends React.Component {
     var chart = new CanvasJS.Chart("chartContainer", {
       animationEnabled: true,
       title: {
-        text: "Basic Column Chart"
+        text: "Answers"
       },
       data: [
         {
@@ -48,7 +48,7 @@ class CanvasChart extends React.Component {
     return (
       <div
         id="chartContainer"
-        style={{ height: 360 + "px", width: 100 + "%" }}
+        style={{ height: 575 + "px", width: 100 + "%" }}
       />
     );
   }

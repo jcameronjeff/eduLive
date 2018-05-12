@@ -1,20 +1,18 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {logoutUser} from '../../actions/authActions';
-import {clearCurrentProfile} from '../../actions/profileActions';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+import { clearCurrentProfile } from "../../actions/profileActions";
 
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
-    this
-      .props
-      .logoutUser();
+    this.props.logoutUser();
   }
 
   render() {
-    const {isAuthenticated, user} = this.props.auth;
+    const { isAuthenticated, user } = this.props.auth;
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
         <div className="container">
@@ -25,8 +23,9 @@ class Navbar extends Component {
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"
-            data-target="#mobile-nav">
-            <span className="navbar-toggler-icon"/>
+            data-target="#mobile-nav"
+          >
+            <span className="navbar-toggler-icon" />
           </button>
 
           <div className="collapse navbar-collapse" id="mobile-nav">
@@ -35,6 +34,16 @@ class Navbar extends Component {
                 <a className="nav-link" href="/classroom">
                   ClassRoom Live
                 </a>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/prichat">
+                  Chat
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/paint">
+                  WhiteBoard
+                </Link>
               </li>
             </ul>
 
@@ -52,20 +61,16 @@ class Navbar extends Component {
               <li className="nav-item">
                 <a
                   href=""
-                  onClick={this
-                  .onLogoutClick
-                  .bind(this)}
-                  className="nav-link">
+                  onClick={this.onLogoutClick.bind(this)}
+                  className="nav-link"
+                >
                   Logout
                   <img
                     className="rounded-circle"
                     src={user.avatar}
                     alt={user.name}
-                    style={{
-                    width: '25px',
-                    marginRight: '5px'
-                  }}/>{' '}
-
+                    style={{ width: "25px", marginRight: "5px" }}
+                  />{" "}
                 </a>
               </li>
             </ul>
@@ -80,6 +85,6 @@ Navbar.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({auth: state.auth});
+const mapStateToProps = state => ({ auth: state.auth });
 
-export default connect(mapStateToProps, {logoutUser})(Navbar);
+export default connect(mapStateToProps, { logoutUser })(Navbar);

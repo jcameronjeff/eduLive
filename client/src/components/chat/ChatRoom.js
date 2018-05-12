@@ -4,15 +4,16 @@ import {
   ControlLabel,
   FormControl,
   Form,
-  Button
+  Button,
+  Row
 } from "react-bootstrap";
-import io from "socket.io-client";
 import ChatTable from "./ChatTable.js";
 
 class ChatRoom extends React.Component {
   state = {
     messages: [],
-    newMessage: ""
+    newMessage: "",
+    membercount: 0
   };
 
   socket = this.props.socket;
@@ -25,6 +26,13 @@ class ChatRoom extends React.Component {
         this.setState({
           messages: this.state.messages.concat(message)
         });
+      });
+    });
+
+    this.socket.on("users", users => {
+      console.log(users);
+      this.setState(prevState => {
+        this.setState({ membercount: users });
       });
     });
   }
@@ -50,23 +58,26 @@ class ChatRoom extends React.Component {
   render() {
     return (
       <div>
-        <div py={4} className="chatbox">
+        <div py={4} className="chatbox card">
+          <h4>Students Online: {this.state.membercount}</h4>
           <ChatTable messages={this.state.messages} />
+          <hr />
+          <Form inline onSubmit={this.handleSubmit}>
+            <FormGroup>
+              <FormControl
+                id="message"
+                type="text"
+                label="Message"
+                placeholder="Enter your message"
+                onChange={this.setNewMessage}
+                value={this.state.newMessage}
+                autoComplete="off"
+              />
+            </FormGroup>
+
+            <Button type="submit">Send</Button>
+          </Form>
         </div>
-        <Form inline onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <FormControl
-              id="message"
-              type="text"
-              label="Message"
-              placeholder="Enter your message"
-              onChange={this.setNewMessage}
-              value={this.state.newMessage}
-              autoComplete="off"
-            />
-          </FormGroup>
-          <Button type="submit">Send</Button>
-        </Form>
       </div>
     );
   }

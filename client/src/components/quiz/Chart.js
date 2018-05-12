@@ -46,14 +46,15 @@ class Quiz extends React.Component {
       height: "45vh",
       margin: "0 auto",
       width: "90%",
-      backgroundColor: "white",
+      backgroundColor: "rgba(255, 255, 255, 0.49)",
       marginTop: "50px",
-      padding: "10px"
+      padding: "10px",
+      fontSize: "20px"
     };
     return (
       <div className="chart" style={chartStyle}>
         <BarChart
-          type={"bar"}
+          type={"Bar"}
           data={this.chartData}
           options={this.chartOptions}
         />

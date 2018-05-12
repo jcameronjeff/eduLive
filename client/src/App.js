@@ -21,7 +21,9 @@ import Quiz from "./components/quiz/Quiz";
 import Chart from "./components/quiz/Chart";
 import CanvasChart from "./components/quiz/CanvasChart";
 import io from "socket.io-client";
-
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import PriChat from "./components/chat/PrivateChat/PriChat";
+import Paint from "./components/paint/Paint";
 const socket = io(window.location.origin);
 
 if (localStorage.jwtToken) {
@@ -50,30 +52,49 @@ class App extends Component {
           <div className="App">
             <Navbar />
             <Route exact path="/" component={Landing} />
-            <div className="container">
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <PropsRoute
-                exact
-                path="/canvaschart"
-                component={CanvasChart}
-                socket={socket}
-              />
-              <PropsRoute exact path="/quiz" component={Quiz} socket={socket} />
-              <PropsRoute
-                exact
-                path="/chart"
-                component={Chart}
-                socket={socket}
-              />
-              <Switch>
-                <PrivateRoute
+            <div className="container-fluid">
+              <div className="wrap">
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <PropsRoute
                   exact
-                  path="/classroom"
-                  component={ClassRoom}
+                  path="/canvaschart"
+                  component={CanvasChart}
                   socket={socket}
                 />
-              </Switch>
+                <PropsRoute
+                  exact
+                  path="/quiz"
+                  component={Quiz}
+                  socket={socket}
+                />
+                <PropsRoute
+                  exact
+                  path="/chart"
+                  component={Chart}
+                  socket={socket}
+                />
+                <PropsRoute
+                  exact
+                  path="/prichat"
+                  component={PriChat}
+                  socket={socket}
+                />
+                <PropsRoute
+                  exact
+                  path="/paint"
+                  component={Paint}
+                  socket={socket}
+                />
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/classroom"
+                    component={ClassRoom}
+                    socket={socket}
+                  />
+                </Switch>
+              </div>
             </div>
             <Footer />
           </div>

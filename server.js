@@ -3,7 +3,6 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const mongoose = require("mongoose");
-const socketIo = require("socket.io");
 const passport = require("passport");
 var bodyParser = require("body-parser");
 var cors = require("cors");
@@ -52,11 +51,14 @@ const server = app.listen(PORT, function() {
   console.log(`🌎 ==> Server now on port ${PORT}!`);
 });
 
-const io = socketIo(server); // < Interesting!
+const io = require("socket.io").listen(server); // < Interesting!
 
 io.sockets.on("connection", socket => {
   socket.emit(socket.id);
-
+  io.of("/").clients((error, clients) => {
+    if (error) throw error;
+    socket.emit("users", clients.length); // => [PZDoMHjiu8PYfRiKAAAF, Anw2LatarvGVVXEIAAAD]
+  });
   console.log("Connected: %s", socket.id);
 
   socket.on("chat", function(data) {

@@ -3,3 +3,13 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.App {
+  position: relative;
+  background: url("https://images.pexels.com/photos/355948/pexels-photo-355948.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
+    no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  overflow: scroll;
+}

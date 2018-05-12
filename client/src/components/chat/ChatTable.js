@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Panel, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Panel, ListGroup, ListGroupItem } from "react-bootstrap";
 
 class ChatTable extends React.Component {
   // constructor(props) {
@@ -8,7 +8,7 @@ class ChatTable extends React.Component {
 
   render() {
     return (
-      <Panel>
+      <Panel className="messages">
         <ListGroup>
           {this.props.messages.map(message => (
             <ListGroupItem key={message.key}>

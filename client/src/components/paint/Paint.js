@@ -1,11 +1,11 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
 export default class extends Component {
   static defaultProps = {
     loadTimeOffset: 5,
     brushSize: 6,
     brushColor: "#444",
-    canvasWidth: 400,
+    canvasWidth: 800,
     canvasHeight: 400,
     disabled: false
   };
@@ -31,7 +31,7 @@ export default class extends Component {
         throw new Error("saveData needs to be a stringified array!");
       }
       // parse first to catch any possible errors before clear()
-      const {linesArray, width, height} = JSON.parse(saveData);
+      const { linesArray, width, height } = JSON.parse(saveData);
 
       if (!linesArray || typeof linesArray.push !== "function") {
         throw new Error("linesArray needs to be an array!");
@@ -40,7 +40,10 @@ export default class extends Component {
       // start the load-process
       this.clear();
 
-      if (width === this.props.canvasWidth && height === this.props.canvasHeight) {
+      if (
+        width === this.props.canvasWidth &&
+        height === this.props.canvasHeight
+      ) {
         this.linesArray = linesArray;
       } else {
         // we need to rescale the lines based on saved & current dimensions
@@ -66,34 +69,28 @@ export default class extends Component {
 
   redraw = immediate => {
     if (this.ctx) {
-      this
-        .ctx
-        .clearRect(0, 0, this.props.canvasWidth, this.props.canvasHeight);
+      this.ctx.clearRect(0, 0, this.props.canvasWidth, this.props.canvasHeight);
     }
 
     this.timeoutValidity++;
     const timeoutValidity = this.timeoutValidity;
-    this
-      .linesArray
-      .forEach((line, idx) => {
-        // draw the line with a time offset creates the cool drawing-animation effect
-        if (!immediate) {
-          window.setTimeout(() => {
-            if (timeoutValidity === this.timeoutValidity) {
-              this.drawLine(line);
-            }
-          }, idx * this.props.loadTimeOffset);
-        } else {
-          // if the immediate flag is true, draw without timeout
-          this.drawLine(line);
-        }
-      });
+    this.linesArray.forEach((line, idx) => {
+      // draw the line with a time offset creates the cool drawing-animation effect
+      if (!immediate) {
+        window.setTimeout(() => {
+          if (timeoutValidity === this.timeoutValidity) {
+            this.drawLine(line);
+          }
+        }, idx * this.props.loadTimeOffset);
+      } else {
+        // if the immediate flag is true, draw without timeout
+        this.drawLine(line);
+      }
+    });
   };
 
   getMousePos = e => {
-    const rect = this
-      .canvas
-      .getBoundingClientRect();
+    const rect = this.canvas.getBoundingClientRect();
 
     // use cursor pos as default
     let clientX = e.clientX;
@@ -114,9 +111,7 @@ export default class extends Component {
 
   clear = () => {
     if (this.ctx) {
-      this
-        .ctx
-        .clearRect(0, 0, this.props.canvasWidth, this.props.canvasHeight);
+      this.ctx.clearRect(0, 0, this.props.canvasWidth, this.props.canvasHeight);
     }
     this.timeoutValidity++;
     this.linesArray = [];
@@ -125,9 +120,7 @@ export default class extends Component {
 
   undo = () => {
     if (this.startDrawIdx.length > 0) {
-      this
-        .linesArray
-        .splice(this.startDrawIdx.pop());
+      this.linesArray.splice(this.startDrawIdx.pop());
       this.redraw(true);
       return true;
     }
@@ -135,37 +128,24 @@ export default class extends Component {
   };
 
   drawLine = line => {
-    if (!this.ctx) 
-      return;
-    
+    if (!this.ctx) return;
+
     this.ctx.strokeStyle = line.color;
     this.ctx.lineWidth = line.size;
     this.ctx.lineCap = "round";
-    this
-      .ctx
-      .beginPath();
-    this
-      .ctx
-      .moveTo(line.startX, line.startY);
-    this
-      .ctx
-      .lineTo(line.endX, line.endY);
-    this
-      .ctx
-      .stroke();
+    this.ctx.beginPath();
+    this.ctx.moveTo(line.startX, line.startY);
+    this.ctx.lineTo(line.endX, line.endY);
+    this.ctx.stroke();
 
-    this
-      .socket
-      .emit("drawing", line);
+    this.socket.emit("drawing", line);
   };
 
   drawStart = e => {
     this.isMouseDown = true;
-    this
-      .startDrawIdx
-      .push(this.linesArray.length);
+    this.startDrawIdx.push(this.linesArray.length);
 
-    const {x, y} = this.getMousePos(e);
+    const { x, y } = this.getMousePos(e);
     this.x = x;
     this.y = y;
 
@@ -178,11 +158,10 @@ export default class extends Component {
   };
 
   draw = e => {
-    if (!this.isMouseDown || this.props.disabled) 
-      return;
-    
+    if (!this.isMouseDown || this.props.disabled) return;
+
     // calculate the current x, y coords
-    const {x, y} = this.getMousePos(e);
+    const { x, y } = this.getMousePos(e);
 
     // Offset by 1 to ensure drawing a dot on click
     const newX = x + 1;
@@ -202,15 +181,11 @@ export default class extends Component {
     this.drawLine(line);
 
     // push it to our array of lines
-    this
-      .linesArray
-      .push(line);
+    this.linesArray.push(line);
 
     // notify parent that a new line was added
     if (typeof this.props.onChange === "function") {
-      this
-        .props
-        .onChange(this.linesArray);
+      this.props.onChange(this.linesArray);
     }
 
     // set current x, y coords
@@ -219,37 +194,42 @@ export default class extends Component {
   };
 
   componentDidMount() {
-    this
-      .socket
-      .on("drawing", data => {
-        this.drawLine(data);
-      });
+    this.socket.on("drawing", data => {
+      this.drawLine(data);
+    });
+  }
+  componentWillUnmount() {
+    this.socket.close();
   }
   render() {
-    return (<canvas
-      width={this.props.canvasWidth}
-      height={this.props.canvasHeight}
-      style={{
-      display: "block",
-      background: "#fff",
-      touchAction: "none",
-      border: "2px solid #000000",
-      ...this.props.style
-    }}
-      ref={canvas => {
-      if (canvas) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext("2d");
-      }
-    }}
-      onMouseDown={this.drawStart}
-      onClick={() => false}
-      onMouseUp={this.drawEnd}
-      onMouseOut={this.drawEnd}
-      onMouseMove={this.draw}
-      onTouchStart={this.drawStart}
-      onTouchMove={this.draw}
-      onTouchEnd={this.drawEnd}
-      onTouchCancel={this.drawEnd}/>);
+    return (
+      <div className="container paint">
+        <canvas
+          width={this.props.canvasWidth}
+          height={this.props.canvasHeight}
+          style={{
+            display: "block",
+            background: "#fff",
+            touchAction: "none",
+            border: "2px solid #000000",
+            ...this.props.style
+          }}
+          ref={canvas => {
+            if (canvas) {
+              this.canvas = canvas;
+              this.ctx = canvas.getContext("2d");
+            }
+          }}
+          onMouseDown={this.drawStart}
+          onMouseUp={this.drawEnd}
+          onMouseOut={this.drawEnd}
+          onMouseMove={this.draw}
+          onTouchStart={this.drawStart}
+          onTouchMove={this.draw}
+          onTouchEnd={this.drawEnd}
+          onTouchCancel={this.drawEnd}
+        />
+      </div>
+    );
   }
 }

@@ -4,6 +4,8 @@ import { loginUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { connect } from "react-redux";
 import classnames from "classnames";
+import { Card, Button } from "tabler-react";
+import { FormCard, FormTextInput, StandaloneFormPage } from "tabler-react";
 
 class Login extends Component {
   constructor() {
@@ -55,35 +57,42 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="login">
+      <div className="login ">
         <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Log In</h1>
-              <p className="lead text-center">
-                Sign in to your Live Edu Account
-              </p>
-              <form onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="Email Address"
-                  name="email"
-                  type="email"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  error={errors.email}
-                />
+          <div className="row d-flex justify-content-center">
+            <Card className="border-white my-5 p-5 bg-transparent rounded">
+              <Card.Header className="white-text text-center">
+                <Card.Title>Log In</Card.Title>
+                <p className="lead text-center">
+                  Sign in to your Live Edu Account
+                </p>
+              </Card.Header>
+              <Card.Body>
+                <form onSubmit={this.onSubmit}>
+                  <TextFieldGroup
+                    placeholder="Email Address"
+                    name="email"
+                    type="email"
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    error={errors.email}
+                  />
 
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
-            </div>
+                  <TextFieldGroup
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    value={this.state.password}
+                    onChange={this.onChange}
+                    error={errors.password}
+                  />
+                  <input
+                    type="submit"
+                    className="btn btn-info btn-block mt-4"
+                  />
+                </form>
+              </Card.Body>
+            </Card>
           </div>
         </div>
       </div>

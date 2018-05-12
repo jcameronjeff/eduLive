@@ -2,17 +2,6 @@ img {
   width: 100%;
 }
 
-.landing {
-  position: relative;
-  background: url("https://images.pexels.com/photos/355948/pexels-photo-355948.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
-    no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  margin-top: -24px;
-  margin-bottom: -50px;
-}
-
 .landing-inner {
   padding-top: 80px;
 }
@@ -39,31 +28,33 @@ img {
   color: #bbb !important;
 }
 
-.register {
-  position: relative;
-  background: url("https://images.pexels.com/photos/355948/pexels-photo-355948.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
-    no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 90vh;
-  margin-top: -24px;
-  margin-bottom: -50px;
+.chatbox {
+  padding: 30px;
+  height: 50vh;
+  background-color: aliceblue;
+  min-width: 275px !important;
+  width: 100%;
+  margin-right: 1px;
+}
+.quiz {
+  padding: 40px;
+  margin-left: 20px;
+  min-height: 50vh;
+}
+.wrap {
+  height: 85vh;
 }
 
-.class-room {
-  position: relative;
-  background: url("https://images.pexels.com/photos/355948/pexels-photo-355948.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
-    no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 90vh;
-  margin-top: -24px;
-  margin-bottom: -50px;
+.paint {
+  margin-top: 50px;
+  margin-left: 20%;
+}
+.mainClass {
+  max-width: 60vw;
   width: 100%;
 }
 
-.chatbox {
-  padding: 30px;
-  min-height: 400px;
-  background-color: aliceblue;
+.messages {
+  min-height: 30vh;
+  overflow: scroll;
 }
