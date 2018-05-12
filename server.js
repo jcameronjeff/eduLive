@@ -73,5 +73,6 @@ io.sockets.on("connection", socket => {
   });
   socket.on("drawing", data => socket.broadcast.emit("drawing", data));
   socket.on("vote", data => io.emit("vote", data));
+  socket.on("hand", user => io.emit("hand", user));
   socket.on("disconnect", () => console.log("Client disconnected"));
 });

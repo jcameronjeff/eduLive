@@ -1,88 +1,99 @@
 import React from "react";
-import Question from "../components/Question";
-import QuestionCount from "../components/QuestionCount";
-import AnswerOption from "../components/AnswerOption";
-import { PropTypes } from "prop-types";
+import AnswerOption from "./AnswerOption";
+import QuizData from "../../data/quizData.js";
 
-function QuizQuestion(props) {
+const shuffleArray = array => {
+  let currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
 
-  constructor(props) {
-    super(props);
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
 
-    this.state = {
-     counter: 0,
-     questionId: 1,
-     question: '',
-     answerOptions: [],
-     answer: '',
-     answersCount: {
-       nintendo: 0,
-       microsoft: 0,
-       sony: 0
-     },
-     result: ''
-    };
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
   }
-  componentWillMount() {
-    const shuffledAnswerOptions = quizQuestions.map((question) => this.shuffleArray(question.answers));  
 
-    this.setState({
-      question: quizQuestions[0].question,
-      answerOptions: shuffledAnswerOptions[0]
-    });
-  }
-  
- shuffleArray(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+  return array;
+};
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
+class QuizQuestion extends React.Component {
+  state = {
+    question: "",
+    options: [],
+    answer: "",
+    questionIndex: 0,
+    quiz: []
   };
 
-  function renderAnswerOptions(key) {
-    return (
-      <AnswerOption
-        key={key.content}
-        answerContent={key.content}
-        answerType={key.type}
-        answer={props.answer}
-        questionId={props.questionId}
-        onAnswerSelected={props.onAnswerSelected}
-      />
-    );
+  componentDidMount() {
+    console.log(QuizData);
+    //fetch quiz from API
+    this.setState({
+      quiz: QuizData
+    });
+    //set initial quiz question
+    this.setQuestion();
   }
 
-  return (
-    <div className="quiz">
-      <QuestionCount counter={props.questionId} total={props.questionTotal} />
-      <Question content={props.question} />
-      <ul className="answerOptions">
-        {props.answerOptions.map(renderAnswerOptions)}
-      </ul>
-    </div>
-  );
-}
+  //sets each new question/options/answer chronologically from quiz stored in state
+  setQuestion = () => {
+    if (this.state.questionIndex === 12) {
+      console.log("over");
+    } else {
+      this.setState({
+        answer: this.state.quiz[this.state.questionIndex].correct_answer,
+        question: this.state.quiz[this.state.questionIndex].question
+      });
+      this.formatOptionArray();
+    }
+  };
 
-Quiz.propTypes = {
-  answer: React.PropTypes.string.isRequired,
-  answerOptions: React.PropTypes.array.isRequired,
-  counter: React.PropTypes.number.isRequired,
-  question: React.PropTypes.string.isRequired,
-  questionId: React.PropTypes.number.isRequired,
-  questionTotal: React.PropTypes.number.isRequired,
-  onAnswerSelected: React.PropTypes.func.isRequired
-};
+  //pushes answer onto option array and shuffles array
+  formatOptionArray = () => {
+    let answer = this.state.quiz[this.state.questionIndex].correct_answer;
+    let options = this.state.quiz[this.state.questionIndex].incorrect_answers;
+    options.push(answer);
+    shuffleArray(options);
+    this.setState({
+      options: options
+    });
+  };
+
+  handleUserGuess = e => {
+    console.log(e, e.target.textContent, this.state.answer);
+    if (e.target.textContent === this.state.answer) {
+      let questionIndex = ++this.state.questionIndex;
+      this.setState({
+        questionIndex: questionIndex
+      });
+      this.setQuestion();
+    } else {
+      console.log("wrong");
+    }
+  };
+
+  render() {
+    return !this.state.quiz.length ? (
+      <div className="container"> Loading question </div>
+    ) : (
+      <div className="container">
+        <div>
+          <h3 questions={this.state.question} />
+          <AnswerOption
+            options={this.state.options}
+            answer={this.state.answer}
+            handleUserGuess={this.handleUserGuess}
+          />
+        </div>
+      </div>
+    );
+  }
+}
 
 export default QuizQuestion;

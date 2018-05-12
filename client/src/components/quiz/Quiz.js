@@ -10,6 +10,9 @@ import {
 } from "react-bootstrap";
 import { className } from "classnames";
 import Chart from "./Chart";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import errorReducer from "../../reducers/errorReducer";
 
 class Quiz extends React.Component {
   constructor(props) {
@@ -18,6 +21,7 @@ class Quiz extends React.Component {
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.socket = this.props.socket;
+    this.user = this.props.name;
   }
 
   handleAnswerChange(e) {
@@ -39,6 +43,19 @@ class Quiz extends React.Component {
     console.log(answerData);
   };
 
+  handleRaiseHand = e => {
+    e.preventDefault();
+    console.log(this.user);
+    this.socket.emit("hand", { user: this.user });
+  };
+  componentDidMount() {
+    this.socket.on("hand", user => {
+      toast.info(user.user + " raised their hand", {
+        position: toast.POSITION.TOP_CENTER
+      });
+    });
+  }
+
   render() {
     const quizStyle = {
       margin: "0 auto",
@@ -46,6 +63,7 @@ class Quiz extends React.Component {
     };
     return (
       <div style={quizStyle}>
+        <ToastContainer />
         <h3>What are WebSockets?</h3>
         <br />
         <Form onSubmit={this.handleSubmit}>
@@ -89,6 +107,15 @@ class Quiz extends React.Component {
             </Button>
           </FormGroup>
         </Form>
+        <a style={{ float: "right" }}>
+          <img
+            style={{ margin: "10px", width: "60px", cursor: "pointer" }}
+            src={
+              "http://icons.iconarchive.com/icons/graphicloads/medical-health/256/hand-icon.png"
+            }
+            onClick={this.handleRaiseHand}
+          />click for help
+        </a>
       </div>
     );
   }

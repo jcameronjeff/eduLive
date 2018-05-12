@@ -7,6 +7,7 @@ import { Grid, Col, Row } from "react-bootstrap";
 import { className } from "classnames";
 import Quiz from "./quiz/Quiz";
 import CanvasChart from "./quiz/CanvasChart";
+import QuizQuestion from "./quiz/QuizQuestion";
 
 class ClassRoom extends Component {
   render() {
@@ -22,7 +23,7 @@ class ClassRoom extends Component {
             <Col md={6} lg={6} sm={12}>
               <div className="card quiz p-5">
                 <p className="lead text-muted">Welcome {user.name}</p>
-                <Quiz socket={this.props.socket} />
+                <Quiz socket={this.props.socket} name={user.name} />
               </div>
             </Col>
 

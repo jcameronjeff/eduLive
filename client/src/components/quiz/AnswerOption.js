@@ -1,31 +1,18 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 
-function AnswerOption(props) {
-  return (
-    <li className="answerOption">
-      <input
-        type="radio"
-        className="radioCustomButton"
-        name="radioGroup"
-        checked={props.answerType === props.answer}
-        id={props.answerType}
-        value={props.answerType}
-        disabled={props.answer}
-        onChange={props.onAnswerSelected}
-      />
-      <label className="radioCustomLabel" htmlFor={props.answerType}>
-        {props.answerContent}
-      </label>
-    </li>
-  );
-}
-
-AnswerOption.propTypes = {
-  answerType: React.PropTypes.string.isRequired,
-  answerContent: React.PropTypes.string.isRequired,
-  answer: React.PropTypes.string.isRequired,
-  onAnswerSelected: React.PropTypes.func.isRequired
-};
+const AnswerOption = props => (
+  <div className="answer">
+    {!props.options.length ? (
+      <div>Loading options</div>
+    ) : (
+      props.options.map((cur, i) => (
+        <li key={i} className="list-group-item" onClick={props.handleUserGuess}>
+          <p id={cur}>{cur}</p>
+        </li>
+      ))
+    )}
+  </div>
+);
 
 export default AnswerOption;
