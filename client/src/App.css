@@ -30,7 +30,7 @@ img {
 
 .chatbox {
   padding: 30px;
-  height: 50vh;
+  height: 55vh;
   background-color: aliceblue;
   min-width: 325px !important;
   margin-right: 1px;
@@ -54,7 +54,7 @@ img {
 }
 
 .messages {
-  min-height: 30vh;
+  min-height: 40vh;
   overflow: scroll;
   border: 1px solid #c4c4c4;
   border-radius: 10px 10px 10px 10px;
