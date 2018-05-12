@@ -73,8 +73,7 @@ class Quiz extends React.Component {
               value="A"
               checked={this.state.selectedAnswer === "A"}
               onChange={this.handleAnswerChange}
-            >
-              WebSockets enable two-way communication between client and server.
+            >  WebSockets enable two-way communication between client and server.
             </Radio>
 
             <Radio
@@ -82,8 +81,7 @@ class Quiz extends React.Component {
               value="B"
               checked={this.state.selectedAnswer === "B"}
               onChange={this.handleAnswerChange}
-            >
-              WebSockets enable HTTP transmition of data from server to client.
+            >  WebSockets enable HTTP transmition of data from server to client.
             </Radio>
 
             <Radio
@@ -91,16 +89,14 @@ class Quiz extends React.Component {
               value="C"
               checked={this.state.selectedAnswer === "C"}
               onChange={this.handleAnswerChange}
-            >
-              WebSockets connect independent pieces of middleware.
+            >  WebSockets connect independent pieces of middleware.
             </Radio>
             <Radio
               name="radioGroup"
               value="D"
               checked={this.state.selectedAnswer === "D"}
               onChange={this.handleAnswerChange}
-            >
-              WebSockets are weaved by electric spiders.
+            >  WebSockets are weaved by electric spiders.
             </Radio>
             <Button type="submit" bsStyle="primary">
               Submit
