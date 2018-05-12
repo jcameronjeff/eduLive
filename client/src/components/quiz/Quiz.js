@@ -74,7 +74,7 @@ class Quiz extends React.Component {
               checked={this.state.selectedAnswer === "A"}
               onChange={this.handleAnswerChange}
             >
-              WebSockets enable two-way communication between client ans server.
+              WebSockets enable two-way communication between client and server.
             </Radio>
 
             <Radio
