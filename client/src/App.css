@@ -32,8 +32,7 @@ img {
   padding: 30px;
   height: 50vh;
   background-color: aliceblue;
-  min-width: 275px !important;
-  width: 100%;
+  min-width: 325px !important;
   margin-right: 1px;
 }
 .quiz {
@@ -57,4 +56,6 @@ img {
 .messages {
   min-height: 30vh;
   overflow: scroll;
+  border: 1px solid #c4c4c4;
+  border-radius: 10px 10px 10px 10px;
 }

@@ -59,24 +59,28 @@ class ChatRoom extends React.Component {
     return (
       <div>
         <div py={4} className="chatbox card">
-          <h4>Students Online: {this.state.membercount}</h4>
+          <h4 className="grey-text">
+            Students Online: {this.state.membercount}
+          </h4>
           <ChatTable messages={this.state.messages} />
           <hr />
-          <Form inline onSubmit={this.handleSubmit}>
-            <FormGroup>
-              <FormControl
-                id="message"
-                type="text"
-                label="Message"
-                placeholder="Enter your message"
-                onChange={this.setNewMessage}
-                value={this.state.newMessage}
-                autoComplete="off"
-              />
-            </FormGroup>
+          <div className="row">
+            <Form inline onSubmit={this.handleSubmit}>
+              <FormGroup>
+                <FormControl
+                  id="message"
+                  type="text"
+                  label="Message"
+                  placeholder="Enter your message"
+                  onChange={this.setNewMessage}
+                  value={this.state.newMessage}
+                  autoComplete="off"
+                />
+              </FormGroup>
 
-            <Button type="submit">Send</Button>
-          </Form>
+              <Button type="submit">Send</Button>
+            </Form>
+          </div>
         </div>
       </div>
     );

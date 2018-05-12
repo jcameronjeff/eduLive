@@ -52,25 +52,26 @@ class PriChatRoom extends React.Component {
 
   render() {
     const messageStyle = {
-      height: "400px",
+      height: "450px",
       overflow: "scroll"
     };
     const messageInputStyle = {
       width: "50vw",
-      margin: "0 5px 5px 0",
-      padding: "20px"
+
+      padding: "20px",
+      float: "left"
     };
 
     const messageBtnStyle = { padding: "30px" };
     return (
       <div className="container">
-        <div className="card">
+        <div className="card md-6 lg-6">
           <div className="Row" style={messageStyle}>
             <PriChatTable messages={this.state.messages} />
           </div>
-
+          <hr />
           <div className="Row text-center">
-            <Form class="ml-5" inline onSubmit={this.handleSubmit}>
+            <Form className="p-5" inline onSubmit={this.handleSubmit}>
               <FormGroup>
                 <FormControl
                   id="message"

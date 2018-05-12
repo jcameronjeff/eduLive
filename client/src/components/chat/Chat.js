@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid} from "react-bootstrap";
+import { Grid } from "react-bootstrap";
 // import ChatName from "./ChatName.js";
 import ChatRoom from "./ChatRoom.js";
 
@@ -17,14 +17,16 @@ class Chat extends React.Component {
 
   render() {
     return (
-      <Grid>
-        {this.state.name && <ChatRoom socket={this.props.socket} name={this.state.name}/>}
-      </Grid>
+      <div>
+        {this.state.name && (
+          <ChatRoom socket={this.props.socket} name={this.state.name} />
+        )}
+      </div>
     );
   }
 
   handleSubmitName(name) {
-    this.setState({name: name});
+    this.setState({ name: name });
   }
 }
 export default Chat;
