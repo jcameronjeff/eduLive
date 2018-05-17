@@ -8,13 +8,25 @@ import { className } from "classnames";
 import Quiz from "./quiz/Quiz";
 import CanvasChart from "./quiz/CanvasChart";
 import QuizQuestion from "./quiz/QuizQuestion";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 class ClassRoom extends Component {
+  componentDidMount(){
+    const { user } = this.props.auth;
+    this.props.socket.emit("joined", user);
+    this.props.socket.on("joined", user => {
+      toast.success(user.name + " Joined the Classroom")
+    })
+
+  }
   render() {
     const { user } = this.props.auth;
     console.log("CLASS", this.props);
     return (
       <div className="class-room light-overlay mb-5">
+       <ToastContainer />
         <div className="container-fluid">
           <div className="row my-5 mt-5">
             <Col md={4} lg={3} sm={12}>
