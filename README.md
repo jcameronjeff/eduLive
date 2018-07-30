@@ -1,3 +1,18 @@
+# eduLive
+
+eduLive is a realtime learning environment powered by WebSockets. 
+
+## Technologies
+Front-End: ReactJS
+Back-end: Express server & MongoDB.
+
+## Features:
+Live-Polling. Instructors receive realtime feedback on user comprehension.
+Chat: Built in chat provides instant communication.
+LivePaint: Virtual blackboard using sockets and canvas. 
+
+
+
 # Create React Express App
 
 ## About This Boilerplate
